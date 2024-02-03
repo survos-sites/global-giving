@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello BrowseController!{% endblock %}
+
+{% block body %}
+    {% set columns = [
+        'id'
+    ] %}
+    <twig:api_grid
+        :class="class"
+        :columns="columns"
+        :apiRoute="apiRoute"
+    >
+        <twig:block name="id">
+            {{ row|json_encode }}
+        </twig:block>
+
+
+    </twig:api_grid>
+
+{% endblock %}

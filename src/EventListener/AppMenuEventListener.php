@@ -42,6 +42,9 @@ private ?AuthorizationCheckerInterface $authorizationChecker = null
 
 //        $this->add($menu, 'app_homepage');
         // for nested menus, don't add a route, just a label, then use it for the argument to addMenuItem
+        $this->add($menu, 'survos_commands');
+        $this->add($menu, 'browse_projects');
+        $this->add($menu, 'browse_orgs');
 
         $nestedMenu = $this->addSubmenu($menu, 'Credits');
 

@@ -11,6 +11,7 @@
         "doctrine/doctrine-bundle": "^2.11",
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^2.17",
+        "friendsofsymfony/jsrouting-bundle": "^3.5",
         "meilisearch/meilisearch-php": "^1.6",
         "nelmio/cors-bundle": "^2.4",
         "nyholm/psr7": "^1.0",
@@ -18,6 +19,7 @@
         "phpstan/phpdoc-parser": "^1.25",
         "survos/api-grid-bundle": "*",
         "survos/bootstrap-bundle": "^1.5",
+        "survos/command-bundle": "^1.5",
         "survos/global-giving-bundle": "*@dev",
         "symfony/asset": "^6.4 || ^7.0",
         "symfony/asset-mapper": "^6.4 || ^7.0",
@@ -86,6 +88,7 @@
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
+            "fos:js-routing:dump --format=js --target=public/js/fos_js_routes.js --callback=\"export default  \"": "symfony-cmd",
             "importmap:install": "symfony-cmd"
         },
         "post-install-cmd": [
