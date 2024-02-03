@@ -1,0 +1,2 @@
+survos_global_giving:
+    api_key: '%env(GLOBAL_GIVING_API_KEY)%'
