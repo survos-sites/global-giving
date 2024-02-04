@@ -45,7 +45,7 @@ final class AppLoadDataCommand extends InvokableServiceCommand
     ): void
     {
         $data = $this->globalGivingService->getFeaturedProjects();
-        foreach ($data['projects']['project'] as $projectData) {
+        foreach ($data['project'] as $projectData) {
             $org = $this->addObject(Organization::class, $orgData = $projectData['organization']);
             $projectData['organization'] = $org;
             $project = $this->addObject(Project::class, $projectData);
