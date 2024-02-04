@@ -20,7 +20,7 @@
         "survos/api-grid-bundle": "*",
         "survos/bootstrap-bundle": "^1.5",
         "survos/command-bundle": "^1.5",
-        "survos/global-giving-bundle": "*@dev",
+        "survos/global-giving-bundle": "^1.5",
         "symfony/asset": "^6.4 || ^7.0",
         "symfony/asset-mapper": "^6.4 || ^7.0",
         "symfony/console": "^6.4 || ^7.0",
@@ -119,13 +119,5 @@
         "symfony/web-profiler-bundle": "^6.4 || ^7.0"
     },
     "repositories": {
-        "survos_maker": {
-            "type": "path",
-            "url": "/home/tac/g/survos/survos/packages/maker-bundle"
-        },
-        "survos_gg": {
-            "type": "path",
-            "url": "/home/tac/g/survos/survos/packages/global-giving-bundle"
-        }
     }
 }
