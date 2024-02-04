@@ -44,6 +44,8 @@ final class AppLoadDataCommand extends InvokableServiceCommand
         bool $refresh = false,
     ): void
     {
+        $this->loadExisting();
+
         $data = $this->globalGivingService->getFeaturedProjects();
         foreach ($data['project'] as $projectData) {
             $org = $this->addObject(Organization::class, $orgData = $projectData['organization']);
@@ -113,10 +115,10 @@ final class AppLoadDataCommand extends InvokableServiceCommand
     {
         $id = $data['id'];
         /** @var $object Project|Organization */
-        if (!$object = $this->existingObjects[$id]??null) {
+        if (!$object = $this->existingObjects[$objectClass][$id]??null) {
             $object = (new $objectClass($id));
             $this->entityManager->persist($object);
-            $this->existingObjects[$id] = $object;
+            $this->existingObjects[$objectClass][$id] = $object;
         }
         $themes = $this->getThemes($data['themes']);
         $data['themes'] = array_unique($themes);

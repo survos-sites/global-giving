@@ -15,12 +15,11 @@ symfony proxy:domain:attach gg
 echo "DATABASE_URL=sqlite:///%kernel.project_dir%/var/data.db" > .env.local
 composer install
 bin/console doctrine:schema:update --force --complete
-# add GLOBAL_GIVING_API_KEY to .env.local
-# cp ~/g/sites/gg/.env.local .
+echo "GLOBAL_GIVING_API_KEY=b82dd104-3825-4db8-8c54-8fbe357bf9b4" > .env.local
 bin/console app:load-data
 
 symfony server:start -d
-symfony open:local--path=/api/meili/orgs
+symfony open:local --path=/api/meili/orgs
 
 
 
