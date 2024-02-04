@@ -10,3 +10,4 @@ import 'bootstrap'; // the css framework
 
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
 import 'bootstrap/dist/css/bootstrap.min.css'
+
