@@ -26,7 +26,9 @@ use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ApiResource(
     operations: [new Get(), new Put(), new Delete(), new Patch(),
-        new GetCollection(name: 'doctrine-orgs'
+        new GetCollection(name: 'doctrine-orgs',
+            uriTemplate: "doctrine/orgs",
+
 //            provider: MeilliSearchStateProvider::class,
         )],
     shortName: 'org',

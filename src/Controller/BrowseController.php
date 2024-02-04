@@ -23,7 +23,7 @@ class BrowseController extends AbstractController
     }
 
     #[Route('/orgs', name: 'browse_orgs')]
-    #[Template('browse/projects.html.twig')]
+    #[Template('browse/orgs.html.twig')]
     public function orgs(): array
     {
         return [

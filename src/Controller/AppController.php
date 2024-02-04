@@ -13,6 +13,7 @@ class AppController extends AbstractController
     #[Route('/', name: 'app_homepage')]
     public function home(GlobalGivingService $globalGivingService): Response
     {
+
         $data = $globalGivingService->getFeaturedProjects();
         return $this->render('app/index.html.twig', [
             'data' => $data['projects']
@@ -22,6 +23,14 @@ class AppController extends AbstractController
     #[Cache('1 week')]
     public function fetchData()
     {
+
+    }
+
+    public function ggApiCalls()
+    {
+        return [
+            ''
+        ];
 
     }
 }
