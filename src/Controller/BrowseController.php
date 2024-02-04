@@ -18,7 +18,7 @@ class BrowseController extends AbstractController
     {
         return [
             'class' => Project::class,
-            'apiRoute' => 'proj-doctrine'
+            'apiRoute' => 'proj-meili'
         ];
     }
 

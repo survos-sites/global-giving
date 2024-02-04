@@ -14,9 +14,10 @@ class AppController extends AbstractController
     public function home(GlobalGivingService $globalGivingService): Response
     {
 
+//        $ids = $globalGivingService->getAllProjectsIds()['project'];
         $data = $globalGivingService->getFeaturedProjects();
         return $this->render('app/index.html.twig', [
-            'data' => $data['projects']
+            'projects' => $data['project']
         ]);
     }
 

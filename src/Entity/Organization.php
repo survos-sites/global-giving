@@ -51,7 +51,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ApiFilter(FacetsFieldSearchFilter::class,
     properties: ['themes', 'countries']
 )]
-#[Groups(['org.read'])]
+//#[Groups(['org.read'])]
 class Organization implements RouteParametersInterface
 {
     use RouteParametersTrait;

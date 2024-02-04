@@ -4,14 +4,20 @@
 
 {% block body %}
 
+    <h3>Bug</h3>
 
-    {{ dump(data) }}
+<a href="/api/meili/orgs?page=1">/api/meili/orgs?page=1</a>
+
+
+
+
+    <h3>Featured Projects</h3>
 <div class="example-wrapper">
 
-    This friendly message is coming from:
     <ul>
-        <li>Your controller at <code>/home/tac/g/sites/gg/src/Controller/AppController.php</code></li>
-        <li>Your template at <code>/home/tac/g/sites/gg/templates/app/index.html.twig</code></li>
+        {% for project in projects %}
+            <li>{{ project.title }}</li>
+        {% endfor %}
     </ul>
 </div>
 {% endblock %}
