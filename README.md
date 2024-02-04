@@ -8,15 +8,21 @@ To install for local development, fork this repository and install it, e.g.
 
 
 ```bash
-git clone git@github.com:survos-sites/global-giving && cd global-giving
+git clone git@github.com:survos-sites/global-giving gg && cd gg
+# for developers 
+symfony proxy:domain:attach gg
+
 echo "DATABASE_URL=sqlite:///%kernel.project_dir%/var/data.db" > .env.local
 composer install
 bin/console doctrine:schema:update --force --complete
 # add GLOBAL_GIVING_API_KEY to .env.local
+# cp ~/g/sites/gg/.env.local .
 bin/console app:load-data
 
 symfony server:start -d
-symfony open:local
+symfony open:local--path=/api/meili/orgs
+
+
 
 ```
 
