@@ -1,1 +1,1 @@
-export default  ({"base_url":"","routes":[],"prefix":"","host":"localhost","port":"","scheme":"http","locale":""});
+export default  ({"base_url":"","routes":{"project_show":{"tokens":[["variable","\/","[^\/]++","projectId",true],["text","\/project"]],"defaults":[],"requirements":[],"hosttokens":[],"methods":[],"schemes":[]}},"prefix":"","host":"localhost","port":"","scheme":"http","locale":""});

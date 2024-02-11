@@ -4,41 +4,39 @@
 
 {% block body %}
 
-    <h3>Bug</h3>
+    {% set columns=[
+        'id',
+        'name',
+        'description',
+        'sourceReference'
+    ] %}
+    <twig:grid
+        :data="packages"
+        :caller="_self"
+        :columns="columns"
+    >
+        <twig:block name="description">
+            {{ row.description|u.wordwrap(25)|nl2br  }}
+            {% if row.homepage %}
+            <a href="{{ row.homepage }}" target="_blank">More...</a>
+            {% endif %}
+        </twig:block>
+        <twig:block name="id">
+            {{ loop.index }}
 
-<a href="/api/meili/orgs?page=1" target="_blank">/api/meili/orgs?page=1</a>
-
-    <div id="pop" popover>
-        The JSON response is nested, an array of arrays!
-        <pre>
-    "hydra:member": [
-    [
-      {
-        "id": 189,
-        "name": "GlobalGiving",
-        "ein": "30-0108263",
-        "totalProjects": 249,
-        "rp": {
-          "organizationId": 189
-        }
-      },
-        </pre>
-    </div>
-
-    <button popovertarget="pop">Show Problem</button>
+        </twig:block>
+        <twig:block name="sourceReference">
+            {{ row.sourceReference|slice(0,6) }}
+        </twig:block>
+        <twig:block name="name">
+{#            {{ loop.first ? dump(row) }}#}
+            <a href="{{ row.sourceUrl }}" target="_blank">
+                {{ row.name }}
+            </a>
+        </twig:block>
 
 
-    <h3>Featured Projects</h3>
-<div class="example-wrapper">
 
-    <ul>
-        {% for project in projects %}
-            <li><span class="text-muted text-small">{{ project.id }}</span>
-                <a href="{{ path('project_show', {projectId: project.id}) }}">
-                    {{ project.title }}
-                </a>
-            </li>
-        {% endfor %}
-    </ul>
-</div>
+    </twig:grid>
+
 {% endblock %}

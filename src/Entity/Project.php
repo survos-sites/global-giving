@@ -2,12 +2,17 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use App\Repository\ProjectRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Survos\ApiGrid\Api\Filter\FacetsFieldSearchFilter;
+use Survos\ApiGrid\Api\Filter\MultiFieldSearchFilter;
+use Survos\ApiGrid\Attribute\Facet;
 use Survos\ApiGrid\State\MeiliSearchStateProvider;
 use Survos\CoreBundle\Entity\RouteParametersInterface;
 use Survos\CoreBundle\Entity\RouteParametersTrait;
@@ -15,12 +20,29 @@ use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
 #[ApiResource(
-    normalizationContext: ['groups' => ['project.read', 'rp']],
-    operations: [new Get(), new GetCollection(
-        uriTemplate: "meili/projects",
-        name: 'proj-meili',
-        provider: MeiliSearchStateProvider::class)]
+    operations: [
+//        new Get(),
+//        new GetCollection(name: 'doctrine-projects'),
+        new GetCollection(
+            uriTemplate: "meili/Project",
+            normalizationContext: [
+                'groups' => ['project.read', 'tree', 'rp'],
+            ],
+            name: 'meili-projects',
+            provider: MeiliSearchStateProvider::class
+        )
+    ],
+    normalizationContext: [
+        'groups' => ['project.read', 'rp'],
+    ]
 )]
+#[ApiFilter(FacetsFieldSearchFilter::class, properties: ['status', 'type'])]
+#[ApiFilter(MultiFieldSearchFilter::class, properties: ['summary', 'title'])]
+#[ApiFilter(OrderFilter::class, properties: ['id',
+    'status',
+    'type',
+])]
+#[Groups(['project.read'])]
 class Project implements RouteParametersInterface
 {
     use RouteParametersTrait;
@@ -47,6 +69,7 @@ class Project implements RouteParametersInterface
     private ?bool $active = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Facet()]
     private ?string $status = null;
 
     #[ORM\Column(length: 255, nullable: true)]

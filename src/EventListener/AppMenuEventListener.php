@@ -49,10 +49,12 @@ private ?AuthorizationCheckerInterface $authorizationChecker = null
         $this->add($menu, 'browse_orgs');
 
         $nestedMenu = $this->addSubmenu($menu, 'Credits');
+        $this->add($nestedMenu, 'survos_bundle_browse');
+        $this->add($nestedMenu, 'gg_bundle_browse');
 
         foreach (['bundles', 'javascript'] as $type) {
             // $this->addMenuItem($nestedMenu, ['route' => 'survos_base_credits', 'rp' => ['type' => $type], 'label' => ucfirst($type)]);
-            $this->addMenuItem($nestedMenu, ['uri' => "#$type", 'label' => ucfirst($type)]);
+//            $this->addMenuItem($nestedMenu, ['uri' => "#$type", 'label' => ucfirst($type)]);
         }
     }
 

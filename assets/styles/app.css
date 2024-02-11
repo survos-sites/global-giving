@@ -1,3 +1,9 @@
-body {
-    background-color: skyblue;
+div[popover]::backdrop {
+    background-color: rgba(0, 0, 0, 0.4);
 }
+
+div[popover] {
+    padding: 12px;
+    border: none;
+}
+
