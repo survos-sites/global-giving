@@ -4,13 +4,13 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.2",
+        "php": "^8.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "api-platform/core": "^3.2",
         "doctrine/doctrine-bundle": "^2.11",
         "doctrine/doctrine-migrations-bundle": "^3.3",
-        "doctrine/orm": "^2.17",
+        "doctrine/orm": "^2.18",
         "friendsofsymfony/jsrouting-bundle": "^3.5",
         "meilisearch/meilisearch-php": "^1.6",
         "nelmio/cors-bundle": "^2.4",
@@ -22,6 +22,7 @@
         "survos/command-bundle": "^1.5",
         "survos/deployment-bundle": "^1.5",
         "survos/global-giving-bundle": "^1.5",
+        "survos/landing-bundle": "*",
         "symfony/asset": "^6.4 || ^7.0",
         "symfony/asset-mapper": "^6.4 || ^7.0",
         "symfony/console": "^6.4 || ^7.0",
@@ -104,12 +105,13 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": false,
-            "require": "^6.4 || ^7.0"
+            "allow-contrib": true,
+            "require": "^7.0"
         }
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.5",
+        "composer/composer": "*",
+        "phpunit/phpunit": "^11.0",
         "survos/maker-bundle": "*@dev",
         "symfony/browser-kit": "^6.4 || ^7.0",
         "symfony/css-selector": "^6.4 || ^7.0",

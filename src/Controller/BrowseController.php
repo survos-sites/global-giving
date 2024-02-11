@@ -18,7 +18,7 @@ class BrowseController extends AbstractController
     {
         return [
             'class' => Project::class,
-            'apiRoute' => 'proj-meili'
+            'apiRoute' => 'meili-projects'
         ];
     }
 
