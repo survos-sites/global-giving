@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AppController!{% endblock %}
+
+{% block body %}
+
+    <h3>Bug</h3>
+
+<a href="/api/meili/orgs?page=1" target="_blank">/api/meili/orgs?page=1</a>
+
+    <div id="pop" popover>
+        The JSON response is nested, an array of arrays!
+        <pre>
+    "hydra:member": [
+    [
+      {
+        "id": 189,
+        "name": "GlobalGiving",
+        "ein": "30-0108263",
+        "totalProjects": 249,
+        "rp": {
+          "organizationId": 189
+        }
+      },
+        </pre>
+    </div>
+
+    <button popovertarget="pop">Show Problem</button>
+
+
+    <h3>Featured Projects</h3>
+<div class="example-wrapper">
+
+    <ul>
+        {% for project in projects %}
+            <li><span class="text-muted text-small">{{ project.id }}</span>
+                <a href="{{ path('project_show', {projectId: project.id}) }}">
+                    {{ project.title }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

@@ -26,4 +26,5 @@ return [
     Survos\CommandBundle\SurvosCommandBundle::class => ['all' => true],
     FOS\JsRoutingBundle\FOSJsRoutingBundle::class => ['all' => true],
     Survos\DeploymentBundle\SurvosDeploymentBundle::class => ['all' => true],
+    Survos\LandingBundle\SurvosLandingBundle::class => ['all' => true],
 ];
