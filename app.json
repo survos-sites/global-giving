@@ -1,11 +1,11 @@
 {
-    "name": "global-giving",
+    "name": "globalgiving",
     "description": "A repo, maybe get this from github",
     "keywords": [
         "php",
         "symfony"
     ],
-    "repository": "https:\/\/github.com\/survos-sites\/global-giving",
+    "repository": "https:\/\/github.com\/survos-sites\/globalgiving",
     "scripts": {
         "dokku": {
             "predeploy": "bin\/console importmap:install && bin\/console asset-map:compile",
