@@ -2,12 +2,17 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use App\Repository\ProjectRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Survos\ApiGrid\Api\Filter\FacetsFieldSearchFilter;
+use Survos\ApiGrid\Api\Filter\MultiFieldSearchFilter;
+use Survos\ApiGrid\Attribute\Facet;
 use Survos\ApiGrid\State\MeiliSearchStateProvider;
 use Survos\CoreBundle\Entity\RouteParametersInterface;
 use Survos\CoreBundle\Entity\RouteParametersTrait;
@@ -21,6 +26,11 @@ use Symfony\Component\Serializer\Attribute\Groups;
         name: 'proj-meili',
         provider: MeiliSearchStateProvider::class)]
 )]
+
+#[ApiFilter(FacetsFieldSearchFilter::class, properties: ['themes','status'])] // ,'sections','keywords'])]
+#[ApiFilter(MultiFieldSearchFilter::class, properties: ['title','description'])]
+#[ApiFilter(OrderFilter::class, properties: ['id','status','type'])]
+
 class Project implements RouteParametersInterface
 {
     use RouteParametersTrait;
@@ -33,6 +43,8 @@ class Project implements RouteParametersInterface
 
     #[ORM\ManyToOne(inversedBy: 'projects')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['project.read'])]
+    #[Facet]
     private ?Organization $organization = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -44,15 +56,22 @@ class Project implements RouteParametersInterface
     private ?string $summary = null;
 
     #[ORM\Column]
+    #[Groups(['project.read'])]
     private ?bool $active = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['project.read'])]
+    #[Facet]
     private ?string $status = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Facet]
+    #[Groups(['project.read'])]
     private ?string $type = null;
 
     #[ORM\Column(nullable: true)]
+    #[Facet]
+    #[Groups(['project.read'])]
     private ?array $themes = null;
 
     public function getId(): ?int

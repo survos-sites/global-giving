@@ -5,7 +5,9 @@
 {% block body %}
     {% set columns = [
         'id',
-        'title'
+        'title',
+        'status',
+        'themes'
     ] %}
     <twig:api_grid
         :class="class"

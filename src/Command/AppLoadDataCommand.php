@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Survos\GlobalGivingBundle\Service\GlobalGivingService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Zenstruck\Console\Attribute\Option;
 use Zenstruck\Console\ConfigureWithAttributes;
 use Zenstruck\Console\InvokableServiceCommand;
@@ -29,6 +30,7 @@ final class AppLoadDataCommand extends InvokableServiceCommand
         private GlobalGivingService $globalGivingService,
         private OrganizationRepository $organizationRepository,
         private PropertyAccessorInterface $propertyAccessor,
+        private HttpClientInterface $httpClient,
         private $existingObjects = []
     )
     {
@@ -46,14 +48,37 @@ final class AppLoadDataCommand extends InvokableServiceCommand
     {
         $this->loadExisting();
 
-        $data = $this->globalGivingService->getFeaturedProjects();
-        foreach ($data['project'] as $projectData) {
-            $org = $this->addObject(Organization::class, $orgData = $projectData['organization']);
-            $projectData['organization'] = $org;
-            $project = $this->addObject(Project::class, $projectData);
-//            dd($projectData, $orgData, $project, $org);
+        $downloadUrl = $this->globalGivingService->getAllProjectsDownload();
+        $downloadUrl = $this->globalGivingService->getAllOrganizationsDownload()['url'];
+
+
+        // could use Symfony client here, only 18M for orgs
+        if (!file_exists($fn = 'orgs.xml')) {
+            $response = $this->httpClient->request('GET', $downloadUrl);
+            $fileHandler = fopen($fn, 'w');
+            foreach ($this->httpClient->stream($response) as $chunk) {
+                fwrite($fileHandler, $chunk->getContent());
+            }
         }
-        $this->entityManager->flush();
+        // @todo: https://sabre.io/xml/reading/
+        dd($downloadUrl, filesize($fn), realpath($fn));
+
+        $next = null; // to start with;
+        do {
+            $data = $this->globalGivingService->getAllProjects(['nextProjectId' => $next]);
+//        $data = $this->globalGivingService->getFeaturedProjects();
+            foreach ($data['project'] as $projectData) {
+                dd($projectData);
+                $org = $this->addObject(Organization::class, $orgData = $projectData['organization']);
+                dd($projectData, $org);
+                $projectData['organization'] = $org;
+                $project = $this->addObject(Project::class, $projectData);
+//            dd($projectData, $orgData, $project, $org);
+            }
+            $this->entityManager->flush();
+            $next = $data['nextProjectId']??false;
+            dd($next);
+        } while ($next);
         $io->success('app:load-data success.');
     }
 
