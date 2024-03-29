@@ -61,23 +61,21 @@ final class AppLoadDataCommand extends InvokableServiceCommand
             }
         }
         // @todo: https://sabre.io/xml/reading/
-        dd($downloadUrl, filesize($fn), realpath($fn));
+//        dd($downloadUrl, filesize($fn), realpath($fn));
 
         $next = null; // to start with;
         do {
             $data = $this->globalGivingService->getAllProjects(['nextProjectId' => $next]);
 //        $data = $this->globalGivingService->getFeaturedProjects();
             foreach ($data['project'] as $projectData) {
-                dd($projectData);
                 $org = $this->addObject(Organization::class, $orgData = $projectData['organization']);
-                dd($projectData, $org);
                 $projectData['organization'] = $org;
                 $project = $this->addObject(Project::class, $projectData);
 //            dd($projectData, $orgData, $project, $org);
             }
             $this->entityManager->flush();
             $next = $data['nextProjectId']??false;
-            dd($next);
+//            dd($next);
         } while ($next);
         $io->success('app:load-data success.');
     }
