@@ -2,6 +2,8 @@
 
 The project uses the Global Giving API.  It is not formally associated with https://www.globalgiving.org/ except for using the API https://www.globalgiving.org/api/
 
+DEPRECATED.  Their API no longer supports json.
+
 ## Developers
 
 To install for local development, fork this repository and install it, e.g.
