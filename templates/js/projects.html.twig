@@ -1,0 +1,3 @@
+<article class="card h-100">
+{% if hit.imageUrl %}<a href="{{ hit.showUrl }}"><img class="card-img-top atlas-image" src="{{ hit.imageUrl }}" alt="{{ hit.title }}" loading="lazy"></a>{% endif %}
+<div class="card-body"><div class="text-secondary small mb-2">{{ hit.countryCode }} · {{ hit.themes|join(' / ') }}</div><h3 class="card-title"><a href="{{ hit.showUrl }}">{{ hit.title }}</a></h3><p>{{ hit.summary|default('')|slice(0,160) }}…</p></div><div class="card-footer small">{{ hit.organizationName|default('GlobalGiving project') }}</div></article>

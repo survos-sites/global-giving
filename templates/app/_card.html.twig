@@ -1,0 +1,3 @@
+<article class="card h-100">
+{% if project.imageUrl %}<a href="{{ path('project_show', project.rp) }}"><img class="card-img-top atlas-image" src="{{ project.imageUrl }}" alt="{{ project.title }}" loading="lazy"></a>{% endif %}
+<div class="card-body"><div class="text-secondary small mb-2">{{ project.countryCode }} · {{ project.themes|slice(0, 2)|join(' / ') }}</div><h3 class="card-title"><a href="{{ path('project_show', project.rp) }}">{{ project.title }}</a></h3><p>{{ project.summary|default('')|slice(0, 160) }}…</p></div><div class="card-footer small">{{ project.organizationName|default('GlobalGiving project') }}</div></article>

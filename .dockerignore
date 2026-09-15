@@ -1,0 +1,10 @@
+.git
+var
+vendor
+node_modules
+public/assets
+public/bundles
+.env.local
+.env.local.php
+.env.*.local
+tests

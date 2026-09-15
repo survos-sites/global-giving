@@ -1,0 +1,9 @@
+survos_tabler:
+    app:
+        code: global-giving
+        abbr: Giving Atlas
+    routes:
+        home: app_homepage
+    options:
+        theme: tabler
+        layout: horizontal

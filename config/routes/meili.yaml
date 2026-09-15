@@ -1,0 +1,4 @@
+meili_templates:
+    resource: '@SurvosMeiliBundle/src/Controller/TemplateController.php'
+    type: attribute
+    prefix: /meili

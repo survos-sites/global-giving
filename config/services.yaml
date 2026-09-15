@@ -18,7 +18,21 @@ services:
         exclude:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
+            - '../src/Input/'
+            - '../src/Research/Ein.php'
             - '../src/Kernel.php'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    app.catalog_serializer:
+        class: Symfony\Component\Serializer\Serializer
+        factory: ['App\Service\CatalogSerializerFactory', 'create']
+        autoconfigure: false
+
+when@test:
+    services:
+        App\Service\SnapshotService:
+            autowire: true
+            arguments:
+                $directory: '%kernel.project_dir%/var/test-exports'

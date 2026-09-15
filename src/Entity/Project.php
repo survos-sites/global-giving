@@ -1,165 +1,69 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
-use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
-use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
-use App\Repository\ProjectRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Survos\ApiGrid\Api\Filter\FacetsFieldSearchFilter;
-use Survos\ApiGrid\Api\Filter\MultiFieldSearchFilter;
-use Survos\ApiGrid\Attribute\Facet;
-use Survos\ApiGrid\State\MeiliSearchStateProvider;
-use Survos\CoreBundle\Entity\RouteParametersInterface;
-use Survos\CoreBundle\Entity\RouteParametersTrait;
+use Survos\FieldBundle\Attribute\EntityMeta;
+use Survos\FieldBundle\Attribute\Field;
+use Survos\FieldBundle\Attribute\RouteIdentity;
+use Survos\FieldBundle\Entity\RouteIdentityTrait;
+use Survos\FieldBundle\Entity\RouteParametersInterface;
+use Survos\MeiliBundle\Metadata\MeiliIndex;
 use Symfony\Component\Serializer\Attribute\Groups;
 
-#[ORM\Entity(repositoryClass: ProjectRepository::class)]
-#[ApiResource(
-    normalizationContext: ['groups' => ['project.read', 'rp']],
-    operations: [new Get(), new GetCollection(
-        uriTemplate: "meili/projects",
-        name: 'proj-meili',
-        provider: MeiliSearchStateProvider::class)]
-)]
-
-#[ApiFilter(FacetsFieldSearchFilter::class, properties: ['themes','status'])] // ,'sections','keywords'])]
-#[ApiFilter(MultiFieldSearchFilter::class, properties: ['title','description'])]
-#[ApiFilter(OrderFilter::class, properties: ['id','status','type'])]
-
-class Project implements RouteParametersInterface
+#[ORM\Entity]
+#[EntityMeta(icon: 'tabler:world-heart', label: 'Projects', group: 'GlobalGiving')]
+#[RouteIdentity(field: 'id')]
+#[ApiResource(operations: [new Get(), new GetCollection()], normalizationContext: ['groups' => ['public']])]
+#[MeiliIndex(name: 'projects', primaryKey: 'id', autoIndex: false)]
+final class Project implements RouteParametersInterface
 {
-    use RouteParametersTrait;
+    use RouteIdentityTrait;
+    public function __construct(#[ORM\Id, ORM\Column(type: 'bigint')] #[Field(sortable: true, order: 0)] #[Groups(['public'])] public readonly int $id) {}
 
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    #[Groups(['project.read'])]
-    private ?int $id = null;
+    #[ORM\Column(type: 'text')] #[Field(searchable: true, sortable: true, order: 1)] #[Groups(['public'])]
+    public string $title = '';
+    #[ORM\Column(type: 'text', nullable: true)] #[Field(searchable: true)] #[Groups(['public'])] public ?string $summary = null;
+    #[ORM\Column(type: 'text', nullable: true)] #[Field(searchable: true)] #[Groups(['public'])] public ?string $need = null;
+    #[ORM\Column(type: 'text', nullable: true)] #[Field(searchable: true)] #[Groups(['public'])] public ?string $activities = null;
+    #[ORM\Column(type: 'text', nullable: true)] #[Field(searchable: true)] #[Groups(['public'])] public ?string $longTermImpact = null;
+    #[ORM\Column] #[Field(filterable: true, facet: true)] #[Groups(['public'])] public bool $active = false;
+    #[ORM\Column(length: 64, nullable: true)] #[Field(filterable: true, facet: true)] #[Groups(['public'])] public ?string $status = null;
+    #[ORM\Column(length: 3, nullable: true)] #[Field(filterable: true, facet: true)] #[Groups(['public'])] public ?string $countryCode = null;
+    #[ORM\Column(type: 'json')] #[Field(filterable: true, facet: true)] #[Groups(['public'])] public array $countries = [];
+    #[ORM\Column(type: 'json')] #[Field(filterable: true, facet: true)] #[Groups(['public'])] public array $themes = [];
+    #[ORM\Column(nullable: true)] #[Field(sortable: true, format: 'currency')] #[Groups(['public'])] public ?float $funding = null;
+    #[ORM\Column(nullable: true)] #[Field(sortable: true, format: 'currency')] #[Groups(['public'])] public ?float $goal = null;
+    #[ORM\Column(nullable: true)] #[Groups(['public'])] public ?float $latitude = null;
+    #[ORM\Column(nullable: true)] #[Groups(['public'])] public ?float $longitude = null;
+    #[ORM\Column(type: 'text', nullable: true)] #[Groups(['public'])] public ?string $imageUrl = null;
+    #[ORM\Column(type: 'text', nullable: true)] #[Groups(['public'])] public ?string $projectUrl = null;
+    #[ORM\Column(length: 64, nullable: true)] #[Groups(['public'])] public ?string $modifiedDate = null;
+    #[ORM\ManyToOne] #[ORM\JoinColumn(nullable: true)] public ?Organization $organization = null;
+    #[ORM\Column(type: 'json')] public array $source = [];
+    #[ORM\Column(type: 'datetime_immutable')] public \DateTimeImmutable $importedAt;
+    #[ORM\Column(length: 64)] public string $importRun = '';
 
-    #[ORM\ManyToOne(inversedBy: 'projects')]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['project.read'])]
-    #[Facet]
-    private ?Organization $organization = null;
+    #[Field(searchable: true, filterable: true, facet: true)] #[Groups(['public'])]
+    public ?string $organizationName { get => $this->organization?->name; }
+    #[Groups(['public'])] public ?int $organizationId { get => $this->organization?->id; }
+    #[Groups(['public'])] public ?float $fundedPercent { get => $this->goal > 0 ? round(100 * ($this->funding ?? 0) / $this->goal, 1) : null; }
 
-    #[ORM\Column(type: Types::TEXT)]
-    #[Groups(['project.read'])]
-    private ?string $title = null;
-
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups(['project.read'])]
-    private ?string $summary = null;
-
-    #[ORM\Column]
-    #[Groups(['project.read'])]
-    private ?bool $active = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['project.read'])]
-    #[Facet]
-    private ?string $status = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    #[Facet]
-    #[Groups(['project.read'])]
-    private ?string $type = null;
-
-    #[ORM\Column(nullable: true)]
-    #[Facet]
-    #[Groups(['project.read'])]
-    private ?array $themes = null;
-
-    public function getId(): ?int
-    {
-        return $this->id;
+    public string $embeddingText {
+        get => implode("\n\n", array_filter([$this->title, $this->summary, $this->need, $this->activities, $this->longTermImpact, implode(', ', $this->themes), implode(', ', $this->countries)]));
     }
 
-    public function getOrganization(): ?Organization
+    public function update(\Survos\GlobalGiving\Dto\Project $dto, ?Organization $org, \DateTimeImmutable $time, string $run): void
     {
-        return $this->organization;
-    }
-
-    public function setOrganization(?Organization $organization): static
-    {
-        $this->organization = $organization;
-
-        return $this;
-    }
-
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
-
-    public function setTitle(string $title): static
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    public function getSummary(): ?string
-    {
-        return $this->summary;
-    }
-
-    public function setSummary(?string $summary): static
-    {
-        $this->summary = $summary;
-
-        return $this;
-    }
-
-    public function isActive(): ?bool
-    {
-        return $this->active;
-    }
-
-    public function setActive(bool $active): static
-    {
-        $this->active = $active;
-
-        return $this;
-    }
-
-    public function getStatus(): ?string
-    {
-        return $this->status;
-    }
-
-    public function setStatus(?string $status): static
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(?string $type): static
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    public function getThemes(): ?array
-    {
-        return $this->themes;
-    }
-
-    public function setThemes(?array $themes): static
-    {
-        $this->themes = $themes;
-
-        return $this;
+        foreach (['title', 'summary', 'need', 'activities', 'longTermImpact', 'active', 'status', 'countryCode', 'countries', 'funding', 'goal', 'latitude', 'longitude', 'imageUrl', 'projectUrl', 'modifiedDate', 'source'] as $field) { $this->$field = $dto->$field; }
+        $this->organization = $org;
+        $this->themes = array_values($dto->themes);
+        $this->importedAt = $time;
+        $this->importRun = $run;
     }
 }

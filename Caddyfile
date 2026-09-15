@@ -1,0 +1,15 @@
+{
+    frankenphp
+    auto_https off
+}
+:{$PORT:80} {
+    root * /app/public
+    handle /favicon.ico {
+        @missing not file
+        respond @missing 204
+        file_server
+    }
+    handle {
+        php_server
+    }
+}

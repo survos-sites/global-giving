@@ -1,71 +1,113 @@
 {
+    "name": "survos-sites/global-giving",
+    "description": "Explore GlobalGiving projects and nonprofit research",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.2",
+        "php": "^8.5",
         "ext-ctype": "*",
+        "ext-dom": "*",
         "ext-iconv": "*",
-        "api-platform/core": "^3.2",
-        "doctrine/doctrine-bundle": "^2.11",
-        "doctrine/doctrine-migrations-bundle": "^3.3",
-        "doctrine/orm": "^2.17",
-        "friendsofsymfony/jsrouting-bundle": "^3.5",
-        "meilisearch/meilisearch-php": "^1.6",
-        "nelmio/cors-bundle": "^2.4",
-        "nyholm/psr7": "^1.0",
-        "phpdocumentor/reflection-docblock": "^5.3",
-        "phpstan/phpdoc-parser": "^1.25",
-        "sabre/xml": "^4.0",
-        "survos/api-grid-bundle": "*",
-        "survos/bootstrap-bundle": "^1.5",
-        "survos/command-bundle": "^1.5",
-        "survos/deployment-bundle": "^1.5",
-        "survos/global-giving-bundle": "^1.5",
-        "symfony/asset": "^6.4 || ^7.0",
-        "symfony/asset-mapper": "^6.4 || ^7.0",
-        "symfony/console": "^6.4 || ^7.0",
-        "symfony/doctrine-messenger": "^6.4 || ^7.0",
-        "symfony/dotenv": "^6.4 || ^7.0",
-        "symfony/expression-language": "^6.4 || ^7.0",
+        "ext-intl": "*",
+        "ext-xmlreader": "*",
+        "api-platform/core": "^4.2",
+        "doctrine/dbal": "^4.4",
+        "doctrine/doctrine-bundle": "^3.0",
+        "doctrine/doctrine-migrations-bundle": "^4.0",
+        "doctrine/orm": "^3.6",
+        "easycorp/easyadmin-bundle": "^5.0",
+        "survos/api-grid-bundle": "^2.5",
+        "survos/field-bundle": "^2.5",
+        "survos/global-giving-bundle": "^2.5",
+        "survos/jsonl-bundle": "^2.5",
+        "survos/meili-bundle": "^2.5",
+        "survos/tabler-bundle": "^2.5",
+        "symfony/asset": "^8.1",
+        "symfony/asset-mapper": "^8.1",
+        "symfony/cache": "^8.1",
+        "symfony/console": "^8.1",
+        "symfony/dotenv": "^8.1",
+        "symfony/expression-language": "^8.1",
+        "symfony/filesystem": "^8.1",
+        "symfony/finder": "^8.1",
         "symfony/flex": "^2",
-        "symfony/form": "^6.4 || ^7.0",
-        "symfony/framework-bundle": "^6.4 || ^7.0",
-        "symfony/http-client": "^6.4 || ^7.0",
-        "symfony/intl": "^6.4 || ^7.0",
-        "symfony/mailer": "^6.4 || ^7.0",
-        "symfony/mime": "^6.4 || ^7.0",
-        "symfony/monolog-bundle": "^3.0",
-        "symfony/notifier": "^6.4 || ^7.0",
-        "symfony/process": "^6.4 || ^7.0",
-        "symfony/property-access": "^6.4 || ^7.0",
-        "symfony/property-info": "^6.4 || ^7.0",
-        "symfony/runtime": "^6.4 || ^7.0",
-        "symfony/security-bundle": "^6.4 || ^7.0",
-        "symfony/serializer": "^6.4 || ^7.0",
-        "symfony/stimulus-bundle": "^2.14",
-        "symfony/string": "^6.4 || ^7.0",
-        "symfony/translation": "^6.4 || ^7.0",
-        "symfony/twig-bundle": "^6.4 || ^7.0",
-        "symfony/ux-turbo": "^2.14",
-        "symfony/validator": "^6.4 || ^7.0",
-        "symfony/web-link": "^6.4 || ^7.0",
-        "symfony/yaml": "^6.4 || ^7.0",
-        "twig/extra-bundle": "^2.12|^3.0",
-        "twig/intl-extra": "^3.8",
-        "twig/twig": "^2.12|^3.0",
-        "zenstruck/console-extra": "*"
+        "symfony/form": "^8.1",
+        "symfony/framework-bundle": "^8.1",
+        "symfony/http-client": "^8.1",
+        "symfony/intl": "^8.1",
+        "symfony/lock": "^8.1",
+        "symfony/messenger": "^8.1",
+        "symfony/property-access": "^8.1",
+        "symfony/property-info": "^8.1",
+        "symfony/runtime": "^8.1",
+        "symfony/security-bundle": "^8.1",
+        "symfony/serializer": "^8.1",
+        "symfony/stimulus-bundle": "^3",
+        "symfony/string": "^8.1",
+        "symfony/translation": "^8.1",
+        "symfony/twig-bundle": "^8.1",
+        "symfony/ux-icons": "^3",
+        "symfony/ux-twig-component": "^3",
+        "symfony/validator": "^8.1",
+        "symfony/yaml": "^8.1",
+        "twig/extra-bundle": "^3",
+        "twig/twig": "^3.24",
+        "zenstruck/bytes": "^1"
     },
-    "config": {
-        "allow-plugins": {
-            "php-http/discovery": true,
-            "symfony/flex": true,
-            "symfony/runtime": true,
-            "endroid/installer": true
+    "require-dev": {
+        "phpunit/phpunit": "^13",
+        "phpstan/phpstan": "^2",
+        "symfony/browser-kit": "^8.1",
+        "symfony/css-selector": "^8.1",
+        "symfony/debug-bundle": "^8.1",
+        "symfony/web-profiler-bundle": "^8.1"
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../mono/bu/*",
+            "options": {
+                "versions": {
+                    "survos/js-twig-bundle": "2.99.0",
+                    "survos/atlas-bundle": "2.99.0",
+                    "survos/kit-bundle": "2.99.0",
+                    "survos/meili-bundle": "2.99.0",
+                    "survos/field-bundle": "2.99.0",
+                    "survos/jsonl-bundle": "2.99.0",
+                    "survos/global-giving-bundle": "2.99.0",
+                    "survos/tabler-bundle": "2.99.0",
+                    "survos/api-grid-bundle": "2.99.0",
+                    "survos/data-contracts": "2.99.0",
+                    "survos/lingua-core": "2.99.0",
+                    "survos/lingua-contracts": "2.99.0",
+                    "survos/global-giving-client": "2.99.0"
+                }
+            }
         },
-        "sort-packages": true
-    },
+        {
+            "type": "path",
+            "url": "../mono/lib/*",
+            "options": {
+                "versions": {
+                    "survos/js-twig-bundle": "2.99.0",
+                    "survos/atlas-bundle": "2.99.0",
+                    "survos/kit-bundle": "2.99.0",
+                    "survos/meili-bundle": "2.99.0",
+                    "survos/field-bundle": "2.99.0",
+                    "survos/jsonl-bundle": "2.99.0",
+                    "survos/global-giving-bundle": "2.99.0",
+                    "survos/tabler-bundle": "2.99.0",
+                    "survos/api-grid-bundle": "2.99.0",
+                    "survos/data-contracts": "2.99.0",
+                    "survos/lingua-core": "2.99.0",
+                    "survos/lingua-contracts": "2.99.0",
+                    "survos/global-giving-client": "2.99.0"
+                }
+            }
+        }
+    ],
     "autoload": {
         "psr-4": {
             "App\\": "src/"
@@ -73,53 +115,32 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "App\\Tests\\": "tests/"
+            "App\\Tests\\": "tests/",
+            "Survos\\GlobalGiving\\Tests\\": "../mono/lib/global-giving-client/tests/",
+            "Survos\\GlobalGivingBundle\\Tests\\": "../mono/bu/global-giving-bundle/tests/"
         }
     },
-    "replace": {
-        "symfony/polyfill-ctype": "*",
-        "symfony/polyfill-iconv": "*",
-        "symfony/polyfill-php72": "*",
-        "symfony/polyfill-php73": "*",
-        "symfony/polyfill-php74": "*",
-        "symfony/polyfill-php80": "*",
-        "symfony/polyfill-php81": "*",
-        "symfony/polyfill-php82": "*"
-    },
-    "scripts": {
-        "auto-scripts": {
-            "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd",
-            "fos:js-routing:dump --format=js --target=public/js/fos_js_routes.js --callback=\"export default  \"": "symfony-cmd",
-            "importmap:install": "symfony-cmd"
+    "config": {
+        "allow-plugins": {
+            "symfony/flex": true,
+            "symfony/runtime": true,
+            "php-http/discovery": true
         },
-        "post-install-cmd": [
-            "@auto-scripts"
-        ],
-        "post-update-cmd": [
-            "@auto-scripts"
-        ]
-    },
-    "conflict": {
-        "symfony/symfony": "*"
+        "sort-packages": true
     },
     "extra": {
         "symfony": {
-            "allow-contrib": false,
-            "require": "^6.4 || ^7.0"
+            "allow-contrib": true,
+            "require": "^8.1"
         }
     },
-    "require-dev": {
-        "phpunit/phpunit": "^9.5",
-        "survos/maker-bundle": "*@dev",
-        "symfony/browser-kit": "^6.4 || ^7.0",
-        "symfony/css-selector": "^6.4 || ^7.0",
-        "symfony/debug-bundle": "^6.4 || ^7.0",
-        "symfony/maker-bundle": "^1.0",
-        "symfony/phpunit-bridge": "^7.0",
-        "symfony/stopwatch": "^6.4 || ^7.0",
-        "symfony/web-profiler-bundle": "^6.4 || ^7.0"
-    },
-    "repositories": {
+    "scripts": {
+        "test": "phpunit",
+        "check": [
+            "@test",
+            "php bin/console lint:container",
+            "php bin/console lint:twig templates/",
+            "php bin/console doctrine:schema:validate"
+        ]
     }
 }

@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ base|title }} · Giving Atlas{% endblock %}
+{% block stylesheets %}{{ parent() }}<link rel="stylesheet" href="{{ asset('bundles/survosmeili/meili.css') }}">{% endblock %}
+{% block javascripts %}{{ importmap('meili') }}{% endblock %}
+{% block body %}
+<h1>{{ base == 'lab' ? 'AI Lab' : base|title }}</h1>{% if base == 'lab' %}<p class="text-secondary">A small active-project sample using local vector embeddings. Compare keyword search with semantic similarity; matches are discovery suggestions, not impact ratings.</p>{% endif %}<p class="text-secondary">Search by cause, community, or the change you want to see.</p>
+{% set sc = '@survos/meili-bundle/insta' %}
+<div {{ stimulus_controller(sc, {serverUrl: serverUrl, serverApiKey: apiKey, indexName: indexUid, templateUrl: templateUrl, semanticEnabled: base == 'lab', embedderName: base == 'lab' ? 'local' : '', semanticRatio: base == 'lab' ? 0.65 : 0, hitClass: 'grid-3', searchPlaceholder: base == 'organizations' ? 'Search nonprofits by name or mission…' : 'Search projects by cause or community…'}) }}>
+<div class="mb-3" {{ stimulus_target(sc, 'searchBox') }}></div>
+{% if base == 'lab' %}<label class="form-label" for="semantic-ratio">Semantic share <output {{ stimulus_target(sc, 'semanticOutput') }}>65%</output></label><input id="semantic-ratio" class="form-range mb-3" type="range" min="0" max="100" step="5" value="65" {{ stimulus_target(sc, 'semanticSlider') }} {{ stimulus_action(sc, 'semantic', 'input') }}><p class="small text-secondary">0% = keywords only · 100% = meaning only</p>{% endif %}<div class="mb-3 text-secondary" {{ stimulus_target(sc, 'stats') }}></div>
+<div class="row"><aside class="col-lg-3 mb-4" {{ stimulus_target(sc, 'refinementList') }}>
+<div class="card"><div class="card-body"><h3>Country</h3><div data-attribute="countries" data-widget="RefinementList" data-searchable="true" data-search-mode="prefix" data-show-more-limit="30" data-limit="10"></div><hr><h3>Cause</h3><div data-attribute="themes" data-widget="RefinementList" data-searchable="true" data-search-mode="prefix" data-show-more-limit="30" data-limit="12"></div>
+{% if base == 'projects' %}<hr><h3>Project activity</h3><div data-attribute="active" data-widget="RefinementList" data-limit="2" data-show-more-limit="2" data-lookup='{"true":"Active","false":"Historical"}'></div>{% endif %}</div></div></aside>
+<div class="col-lg-9"><div {{ stimulus_target(sc, 'hits') }}></div><div class="mt-4" {{ stimulus_target(sc, 'pagination') }}></div></div></div></div>
+{% endblock %}

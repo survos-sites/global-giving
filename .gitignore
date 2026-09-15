@@ -25,3 +25,9 @@
 ###< symfony/asset-mapper ###
 config.bat
 node_modules
+
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###
+/config/reference.php
+/.castor.stub.php

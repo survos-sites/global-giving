@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<section class="atlas-hero mb-4"><div class="eyebrow">Local ideas. Global possibilities.</div><h1>Find the people<br>changing their world.</h1><p>Explore grassroots projects, meet the nonprofits behind them, and follow the evidence.</p><a class="btn btn-light btn-lg" href="{{ path('browse_projects') }}">Explore projects →</a></section>
+<div class="row row-cards mb-5">{% for stat in [{value: activeCount, label: 'Active projects'}, {value: organizationCount, label: 'Organizations'}, {value: projectCount, label: 'Projects in this snapshot'}] %}<div class="col-md-4"><div class="card"><div class="card-body"><div class="stat-number">{{ stat.value|number_format }}</div><div class="text-secondary">{{ stat.label }}</div></div></div></div>{% endfor %}</div>
+<div class="d-flex justify-content-between align-items-center mb-3"><h2>New projects to discover</h2><a href="{{ path('browse_projects') }}">Browse the catalog →</a></div>
+<div class="row row-cards">{% for project in projects %}<div class="col-md-6 col-lg-4">{% include 'app/_card.html.twig' %}</div>{% else %}<p>The first catalog import has not finished yet.</p>{% endfor %}</div>
+{% endblock %}

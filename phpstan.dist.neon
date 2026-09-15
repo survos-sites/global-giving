@@ -1,0 +1,7 @@
+parameters:
+    level: 5
+    paths:
+        - src
+        - ../mono/lib/global-giving-client/src
+        - ../mono/bu/global-giving-bundle/src
+    tmpDir: var/phpstan

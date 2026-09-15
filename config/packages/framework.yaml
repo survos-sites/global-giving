@@ -1,14 +1,13 @@
-# see https://symfony.com/doc/current/reference/configuration/framework.html
+parameters:
+    default_trusted_proxies: 'private_ranges'
 framework:
     secret: '%env(APP_SECRET)%'
-    #csrf_protection: true
-
-    # Note that the session will be started ONLY if you read or write from it.
+    trusted_proxies: '%env(default:default_trusted_proxies:TRUSTED_PROXIES)%'
+    trusted_headers: ['x-forwarded-for', 'x-forwarded-host', 'x-forwarded-proto', 'x-forwarded-port']
     session: true
-
-    #esi: true
-    #fragments: true
-
+    serializer: true
+    property_info: true
+    lock: 'flock'
 when@test:
     framework:
         test: true

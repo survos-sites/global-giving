@@ -1,35 +1,12 @@
 {
-    "name": "globalgiving",
-    "description": "A repo, maybe get this from github",
-    "keywords": [
-        "php",
-        "symfony"
-    ],
-    "repository": "https:\/\/github.com\/survos-sites\/globalgiving",
-    "scripts": {
-        "dokku": {
-            "predeploy": "bin\/console importmap:install && bin\/console asset-map:compile",
-            "postdeploy": ""
-        }
-    },
-    "env": {
-        "SECRET_TOKEN": {
-            "description": "A secret key for verifying the integrity of signed cookies.",
-            "value": "secret"
-        },
-        "WEB_CONCURRENCY": {
-            "description": "The number of processes to run.",
-            "generator": "echo 5"
-        }
-    },
-    "image": "gliderlabs\/herokuish",
-    "addons": [
-        "dokku-postgres",
-        "dokku-redis"
-    ],
-    "buildpacks": [
-        {
-            "url": "https:\/\/github.com\/heroku\/heroku-buildpack-php.git"
-        }
-    ]
+  "name": "Giving Atlas",
+  "description": "Explore GlobalGiving projects, nonprofit research and local semantic search",
+  "repository": "https://github.com/survos-sites/global-giving",
+  "keywords": [
+    "symfony",
+    "globalgiving",
+    "nonprofits",
+    "meilisearch",
+    "semantic-search"
+  ]
 }

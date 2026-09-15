@@ -1,9 +1,8 @@
-{% extends "@SurvosBootstrap/%s/base.html.twig"|format(theme_option('theme')) %}
-    {% block stylesheets %}
-    {% endblock %}
-
-    {% block javascripts %}
-        {% block importmap %}{{ importmap('app') }}{% endblock %}
-    {% endblock %}
-
-
+{% extends '@SurvosTabler/layout/base.html.twig' %}
+{% block title %}Giving Atlas{% endblock %}
+{% block page_title %}Giving Atlas{% endblock %}
+{% block navbar_brand %}<a class="navbar-brand fw-bold" href="{{ path('app_homepage') }}">Giving Atlas<span class="badge bg-teal-lt ms-2">GlobalGiving</span></a>{% endblock %}
+{% block navbar_menu %}<nav class="container-xl py-3 d-flex gap-4" aria-label="Main navigation"><a href="{{ path('app_homepage') }}">Overview</a><a href="{{ path('browse_projects') }}">Projects</a><a href="{{ path('browse_organizations') }}">Organizations</a><a href="/api">Data API</a></nav>{% endblock %}
+{% block content %}{% block body %}{% endblock %}{% endblock %}
+{% block footer %}<footer class="container-xl py-4 text-secondary">An independent explorer of <a href="https://www.globalgiving.org/">GlobalGiving</a> data. Not affiliated with or endorsed by GlobalGiving. Images belong to the implementing nonprofits.</footer>{% endblock %}
+{% block javascripts %}{{ importmap('app') }}{% endblock %}
