@@ -2,6 +2,6 @@ parameters:
     level: 5
     paths:
         - src
-        - ../mono/lib/global-giving-client/src
-        - ../mono/bu/global-giving-bundle/src
+        - vendor/survos/global-giving-client/src
+        - vendor/survos/global-giving-bundle/src
     tmpDir: var/phpstan

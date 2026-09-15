@@ -7,11 +7,7 @@ COPY Caddyfile /etc/caddy/Caddyfile
 
 FROM base AS build
 RUN install-php-extensions @composer
-ENV COMPOSER_ALLOW_SUPERUSER=1 COMPOSER_MIRROR_PATH_REPOS=1 APP_ENV=prod APP_DEBUG=0
-# Named context keeps unpublished client/bundle changes buildable and reviewable.
-# docker buildx build --build-context mono=../mono -t global-giving:local .
-COPY --from=mono /bu /mono/bu
-COPY --from=mono /lib /mono/lib
+ENV COMPOSER_ALLOW_SUPERUSER=1 APP_ENV=prod APP_DEBUG=0
 COPY . .
 RUN composer install --no-dev --no-scripts --prefer-dist --no-interaction \
     && composer dump-autoload --no-dev --classmap-authoritative --no-scripts \

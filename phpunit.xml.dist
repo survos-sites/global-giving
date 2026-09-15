@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit bootstrap="tests/bootstrap.php" colors="true" cacheDirectory="var/phpunit" failOnWarning="true">
   <php><server name="APP_ENV" value="test" force="true"/><server name="SHELL_VERBOSITY" value="-1"/><server name="KERNEL_CLASS" value="App\Kernel"/></php>
-  <testsuites><testsuite name="GlobalGiving"><directory>tests</directory><directory>../mono/lib/global-giving-client/tests</directory></testsuite></testsuites>
-  <source><include><directory>src</directory><directory>../mono/lib/global-giving-client/src</directory></include></source>
+  <testsuites><testsuite name="GlobalGiving"><directory>tests</directory><directory>vendor/survos/global-giving-client/tests</directory></testsuite></testsuites>
+  <source><include><directory>src</directory><directory>vendor/survos/global-giving-client/src</directory></include></source>
 </phpunit>

@@ -24,8 +24,8 @@ function check(): void
     run(['php', 'bin/console', 'doctrine:schema:validate']);
 }
 
-#[AsTask(description: 'Build the FrankenPHP image with the local Survos monorepo')]
+#[AsTask(description: 'Build the FrankenPHP image from published dependencies')]
 function image(): void
 {
-    run([...(new \Symfony\Component\Process\ExecutableFinder())->find('docker-buildx') ? ['docker-buildx'] : ['docker', 'buildx'], 'build', '--load', '--build-context', 'mono=../mono', '-t', 'global-giving:local', '.']);
+    run([...(new \Symfony\Component\Process\ExecutableFinder())->find('docker-buildx') ? ['docker-buildx'] : ['docker', 'buildx'], 'build', '--load', '-t', 'global-giving:local', '.']);
 }
