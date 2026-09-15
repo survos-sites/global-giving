@@ -66,15 +66,6 @@
         "symfony/debug-bundle": "^8.1",
         "symfony/web-profiler-bundle": "^8.1"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/survos/global-giving-bundle",
-            "only": [
-                "survos/global-giving-bundle"
-            ]
-        }
-    ],
     "autoload": {
         "psr-4": {
             "App\\": "src/"

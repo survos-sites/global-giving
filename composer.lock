@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b0a89ecd91df64be69df1f3bf416b6ee",
+    "content-hash": "0568a21f7b984cfb4b1f86228ba874dd",
     "packages": [
         {
             "name": "adbario/php-dot-notation",
@@ -2914,18 +2914,19 @@
                     "Survos\\GlobalGivingBundle\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "description": "Symfony integration for the GlobalGiving client",
             "support": {
-                "source": "https://github.com/survos/global-giving-bundle/tree/2.28.7",
-                "issues": "https://github.com/survos/global-giving-bundle/issues"
+                "issues": "https://github.com/survos/global-giving-bundle/issues",
+                "source": "https://github.com/survos/global-giving-bundle/tree/2.28.7"
             },
             "funding": [
                 {
-                    "type": "github",
-                    "url": "https://github.com/kbond"
+                    "url": "https://github.com/kbond",
+                    "type": "github"
                 }
             ],
             "time": "2026-09-15T10:44:09+00:00"

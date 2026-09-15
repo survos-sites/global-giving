@@ -6,7 +6,7 @@ PHP 8.5 · Symfony 8.1 · Doctrine ORM 3 · API Platform 4 · Tabler · AssetMap
 
 ## Local setup
 
-Install from the committed Composer lockfile. No sibling monorepo checkout or local version aliases are required. The GlobalGiving client uses its Packagist release. A package-scoped VCS repository temporarily resolves the GlobalGiving bundle from its published GitHub tags because its existing Packagist entry still points to the legacy `survos/GlobalGivingBundle` repository; remove that override once Packagist points to `survos/global-giving-bundle` and lists 2.28.7 or newer.
+Install from the committed Composer lockfile. The revived GlobalGiving client and Symfony bundle are published on Packagist (2.28.7 or newer). No sibling monorepo checkout, local version aliases or custom Composer repositories are required.
 
 ```sh
 composer install --no-scripts
