@@ -104,3 +104,30 @@ Local overrides also set `OLLAMA_EMBED_URL=http://127.0.0.1:11434/api/embed` bec
 Source IDs use explicit bigint columns, with no generated-value mapping. Besides accommodating provider IDs, this avoids SQLite's implicit auto-increment interpretation of an INTEGER primary key during schema introspection.
 
 To restart this local native search service, install the matching official Meilisearch 1.53.0 executable under `var/tools/meilisearch`, then run `php bin/local-search.php`. The helper reads the admin key from `.env.local`, binds only port 7702 on loopback, and allows outbound loopback connections for Ollama. Meilisearch 1.53 blocks private IPs by default; that narrow allowlist is necessary for local embeddings. Release binaries: https://github.com/meilisearch/meilisearch/releases/tag/v1.53.0 .
+
+## Search comparison lab (local development)
+
+Giving Atlas is actively maintained again. `/lab/compare` compares Meilisearch and Elasticsearch over **identical frozen records and vectors**, while `/lab` preserves the original Meilisearch/Ollama experiment. The comparison page is unavailable in production until an authenticated research workflow is added.
+
+```sh
+# .env.local (server-side only; optional encoded Elasticsearch API key)
+LAB_ES_URL=http://127.0.0.1:9200
+LAB_ES_API_KEY=
+
+# Generate once, then index the same snapshot into each engine.
+php bin/console app:lab:snapshot --limit=200 --no-debug
+php bin/console app:lab:index meili --no-debug
+php bin/console app:lab:index elastic --no-debug
+```
+
+The first pass uses standard cosine dense-vector search in Elasticsearch 9.5.3+, with one shard and no replicas for this disposable local index. Special VectorDB/DiskBBQ modes, rerankers and alternative models are later experiments. No existing catalog index is changed.
+
+- **Keywords:** each engine searches the same combined project text.
+- **Meaning:** both engines receive the same cached Ollama query vector.
+- **Keywords + meaning:** each engine supplies up to 50 keyword and 50 vector candidates; the app combines ranks with equal-weight reciprocal rank fusion (`1/(60 + rank)`), displaying ten results. Raw scores are not compared.
+- Optional country codes apply before vector candidate selection in both engines.
+- Save a comparison to preserve its query, filter, ranked results, index names, snapshot/model identity and timings. Rate projects as not relevant, somewhat relevant or useful. Judgments are shared across engines and modes for the same query, country and snapshot. Unrated is distinct from not relevant.
+
+Snapshots, vector caches, saved runs and judgments live under `var/lab/compare/`. Preserve that directory to retain research. Snapshot selection is deliberately deterministic (active projects ordered by source ID), **not representative**. Text is explicitly capped at 6,000 UTF-8 bytes; the exact text and its hash are stored with source URLs and modification dates. The Ollama model digest is frozen, and a changed model requires a new snapshot. Query embedding/cache time is shown separately from engine request time; individual requests are not performance benchmarks.
+
+Each build creates a new index and publishes its local pointer only after document-count validation. A failed build leaves the previous pointer unchanged. Old and failed comparison indexes are retained for inspection; remove them deliberately when no saved run needs them. Saved runs preserve rendered results independently of index retention. Elasticsearch indexes use the `gg_compare_` prefix; Meilisearch uses the same dedicated prefix. This initial tooling is bounded to 1,000 projects; increase scope only after evaluating the sample.

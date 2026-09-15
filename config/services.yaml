@@ -30,6 +30,11 @@ services:
         factory: ['App\Service\CatalogSerializerFactory', 'create']
         autoconfigure: false
 
+    # Keep engine credentials and embedding payloads out of profiler HTTP traces.
+    app.lab_http:
+        class: Symfony\Contracts\HttpClient\HttpClientInterface
+        factory: ['Symfony\Component\HttpClient\HttpClient', 'create']
+
 when@test:
     services:
         App\Service\SnapshotService:

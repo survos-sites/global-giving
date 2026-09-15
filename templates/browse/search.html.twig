@@ -4,6 +4,7 @@
 {% block javascripts %}{{ importmap('meili') }}{% endblock %}
 {% block body %}
 <h1>{{ base == 'lab' ? 'AI Lab' : base|title }}</h1>{% if base == 'lab' %}<p class="text-secondary">A small active-project sample using local vector embeddings. Compare keyword search with semantic similarity; matches are discovery suggestions, not impact ratings.</p>{% endif %}<p class="text-secondary">Search by cause, community, or the change you want to see.</p>
+{% if base == 'lab' and app.environment != 'prod' %}<p><a class="btn btn-outline-primary" href="{{ path('lab_compare') }}">Compare Meilisearch and Elasticsearch</a></p>{% endif %}
 {% set sc = '@survos/meili-bundle/insta' %}
 <div {{ stimulus_controller(sc, {serverUrl: serverUrl, serverApiKey: apiKey, indexName: indexUid, templateUrl: templateUrl, semanticEnabled: base == 'lab', embedderName: base == 'lab' ? 'local' : '', semanticRatio: base == 'lab' ? 0.65 : 0, hitClass: 'grid-3', searchPlaceholder: base == 'organizations' ? 'Search nonprofits by name or mission…' : 'Search projects by cause or community…'}) }}>
 <div class="mb-3" {{ stimulus_target(sc, 'searchBox') }}></div>
