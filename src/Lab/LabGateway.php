@@ -67,10 +67,12 @@ final readonly class LabGateway
     public function search(string $engine, string $index, string $query, ?array $vector, string $country): array
     {
         if ($engine === 'meili') {
-            $body = ['q' => $query, 'limit' => 50, 'attributesToRetrieve' => ['id', 'title', 'summary', 'countries', 'themes']];
+            $body = ['q' => $query, 'limit' => 50, 'showRankingScore' => true, 'attributesToRetrieve' => ['id', 'title', 'summary', 'countries', 'themes']];
             if ($country !== '') { $body['filter'] = 'countries = '.json_encode($country, JSON_THROW_ON_ERROR); }
             if ($vector !== null) { $body['vector'] = $vector; $body['hybrid'] = ['embedder' => 'shared', 'semanticRatio' => 1.0]; }
-            return $this->request($engine, 'POST', 'indexes/'.$index.'/search', $body)['hits'];
+            return array_map(static function (array $hit): array {
+                $hit['score'] = $hit['_rankingScore'] ?? null; unset($hit['_rankingScore']); return $hit;
+            }, $this->request($engine, 'POST', 'indexes/'.$index.'/search', $body)['hits']);
         }
         $filter = $country === '' ? [] : [['term' => ['countries' => $country]]];
         $body = ['size' => 50, '_source' => ['id', 'title', 'summary', 'countries', 'themes']];
@@ -78,6 +80,6 @@ final readonly class LabGateway
             $body['knn'] = ['field' => 'vector', 'query_vector' => $vector, 'k' => 50, 'num_candidates' => 200];
             if ($filter !== []) { $body['knn']['filter'] = ['bool' => ['filter' => $filter]]; }
         } else { $body['query'] = ['bool' => ['must' => [['match' => ['text' => $query]]], 'filter' => $filter]]; }
-        return array_column($this->request($engine, 'POST', $index.'/_search', $body)['hits']['hits'], '_source');
+        return array_map(static fn (array $hit): array => [...$hit['_source'], 'score' => $hit['_score'] ?? null], $this->request($engine, 'POST', $index.'/_search', $body)['hits']['hits']);
     }
 }

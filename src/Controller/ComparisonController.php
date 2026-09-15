@@ -48,6 +48,13 @@ final class ComparisonController extends AbstractController
                 $query = $run['query']; $mode = $run['mode']; $country = $run['country'];
             } elseif ($query !== '') { $run = $this->lab->compare($query, $mode, $country); $session->set('labRun', $run); }
         } catch (\RuntimeException|\InvalidArgumentException $e) { $error = $e->getMessage(); }
-        return $this->render('lab/compare.html.twig', ['query' => $query, 'mode' => $mode, 'country' => $country, 'run' => $run, 'runId' => $runId, 'manifest' => $manifest, 'error' => $error, 'token' => $token, 'saved' => $this->lab->saved(), 'grades' => $run ? $this->lab->judgments($run) : []]);
+        $shared = [];
+        if ($run && empty($run['results']['meili']['error']) && empty($run['results']['elastic']['error'])) {
+            $meiliRanks = array_flip(array_column($run['results']['meili']['hits'], 'id'));
+            foreach ($run['results']['elastic']['hits'] as $rank => $hit) {
+                if (isset($meiliRanks[$hit['id']])) { $shared[$hit['id']] = ['meili' => $meiliRanks[$hit['id']] + 1, 'elastic' => $rank + 1]; }
+            }
+        }
+        return $this->render('lab/compare.html.twig', ['shared' => $shared, 'query' => $query, 'mode' => $mode, 'country' => $country, 'run' => $run, 'runId' => $runId, 'manifest' => $manifest, 'error' => $error, 'token' => $token, 'saved' => $this->lab->saved(), 'grades' => $run ? $this->lab->judgments($run) : []]);
     }
 }

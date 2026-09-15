@@ -18,6 +18,9 @@ final class ComparisonTest extends TestCase
         $vector = [['id' => 3, 'score' => 0.9], ['id' => 2, 'score' => 0.8]];
         self::assertSame([2, 1, 3], array_column(Ranking::fuse($keyword, $vector), 'id'));
         self::assertSame([2], array_column(Ranking::fuse($keyword, $vector, 1), 'id'));
+        $top = Ranking::fuse($keyword, $vector)[0];
+        self::assertEqualsWithDelta(2 / 62, $top['score'], 0.000001);
+        self::assertSame(['keywordRank' => 2, 'keywordScore' => 1, 'vectorRank' => 2, 'vectorScore' => 0.8], $top['contributions']);
     }
 
     public function testVectorQueriesUseSameVectorAndCountryPrefilter(): void
@@ -25,11 +28,11 @@ final class ComparisonTest extends TestCase
         $requests = [];
         $http = new MockHttpClient(function ($method, $url, $options) use (&$requests) {
             $requests[] = json_decode($options['body'], true, flags: JSON_THROW_ON_ERROR);
-            return new MockResponse(str_contains($url, '/_search') ? '{"hits":{"hits":[{"_source":{"id":7}}]}}' : '{"hits":[{"id":7}]}');
+            return new MockResponse(str_contains($url, '/_search') ? '{"hits":{"hits":[{"_source":{"id":7},"_score":0.8}]}}' : '{"hits":[{"id":7,"_rankingScore":0.8}]}');
         });
         $gateway = new LabGateway($http, 'http://elastic', '', 'http://meili', '', 'http://ollama/api/embed', 'model');
-        self::assertSame([['id' => 7]], $gateway->search('elastic', 'sample', 'water', [0.1, 0.2], 'GT'));
-        self::assertSame([['id' => 7]], $gateway->search('meili', 'sample', 'water', [0.1, 0.2], 'GT'));
+        self::assertSame([['id' => 7, 'score' => 0.8]], $gateway->search('elastic', 'sample', 'water', [0.1, 0.2], 'GT'));
+        self::assertSame([['id' => 7, 'score' => 0.8]], $gateway->search('meili', 'sample', 'water', [0.1, 0.2], 'GT'));
         self::assertSame($requests[0]['knn']['query_vector'], $requests[1]['vector']);
         self::assertSame('GT', $requests[0]['knn']['filter']['bool']['filter'][0]['term']['countries']);
         self::assertSame('countries = "GT"', $requests[1]['filter']);
