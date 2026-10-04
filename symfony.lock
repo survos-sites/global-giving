@@ -160,6 +160,9 @@
     "survos/global-giving-bundle": {
         "version": "dev-main"
     },
+    "survos/grid-bundle": {
+        "version": "2.34.39"
+    },
     "survos/inspection-bundle": {
         "version": "1.5.139"
     },
