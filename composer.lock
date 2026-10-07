@@ -2760,16 +2760,16 @@
         },
         {
             "name": "survos/data-contracts",
-            "version": "2.34.13",
+            "version": "2.35.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/data-contracts.git",
-                "reference": "fbcbcae4ec0754afd78ed709e3c7f48492516906"
+                "reference": "8bad366098576e65db9ea17698381f4040c96afc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/data-contracts/zipball/fbcbcae4ec0754afd78ed709e3c7f48492516906",
-                "reference": "fbcbcae4ec0754afd78ed709e3c7f48492516906",
+                "url": "https://api.github.com/repos/survos/data-contracts/zipball/8bad366098576e65db9ea17698381f4040c96afc",
+                "reference": "8bad366098576e65db9ea17698381f4040c96afc",
                 "shasum": ""
             },
             "require": {
@@ -2799,7 +2799,7 @@
             "description": "Shared data vocabularies, content metadata, and item DTO contracts for Survos data/media/import packages.",
             "support": {
                 "issues": "https://github.com/survos/data-contracts/issues",
-                "source": "https://github.com/survos/data-contracts/tree/2.34.13"
+                "source": "https://github.com/survos/data-contracts/tree/2.35.8"
             },
             "funding": [
                 {
@@ -2807,7 +2807,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-09-28T13:14:11+00:00"
+            "time": "2026-10-05T13:13:35+00:00"
         },
         {
             "name": "survos/field-bundle",
@@ -3061,16 +3061,16 @@
         },
         {
             "name": "survos/js-twig-bundle",
-            "version": "2.34.38",
+            "version": "2.35.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/js-twig-bundle.git",
-                "reference": "ca49761792749154f31154d9ea16b463e86cd11c"
+                "reference": "944852d90b3f0cca71a31bec7f94e8f371a0fc8e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/js-twig-bundle/zipball/ca49761792749154f31154d9ea16b463e86cd11c",
-                "reference": "ca49761792749154f31154d9ea16b463e86cd11c",
+                "url": "https://api.github.com/repos/survos/js-twig-bundle/zipball/944852d90b3f0cca71a31bec7f94e8f371a0fc8e",
+                "reference": "944852d90b3f0cca71a31bec7f94e8f371a0fc8e",
                 "shasum": ""
             },
             "require": {
@@ -3109,7 +3109,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/js-twig-bundle/issues",
-                "source": "https://github.com/survos/js-twig-bundle/tree/2.34.38"
+                "source": "https://github.com/survos/js-twig-bundle/tree/2.35.6"
             },
             "funding": [
                 {
@@ -3117,7 +3117,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-10-04T18:03:08+00:00"
+            "time": "2026-10-05T11:50:37+00:00"
         },
         {
             "name": "survos/jsonl-bundle",
@@ -3435,16 +3435,16 @@
         },
         {
             "name": "survos/tabler-bundle",
-            "version": "2.34.38",
+            "version": "2.35.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/tabler-bundle.git",
-                "reference": "c661251e6e41136d2a27437910909b1ad8d2667b"
+                "reference": "e03890d7a5e6354cde728c4a0e3e163195978bdf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/tabler-bundle/zipball/c661251e6e41136d2a27437910909b1ad8d2667b",
-                "reference": "c661251e6e41136d2a27437910909b1ad8d2667b",
+                "url": "https://api.github.com/repos/survos/tabler-bundle/zipball/e03890d7a5e6354cde728c4a0e3e163195978bdf",
+                "reference": "e03890d7a5e6354cde728c4a0e3e163195978bdf",
                 "shasum": ""
             },
             "require": {
@@ -3527,7 +3527,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/tabler-bundle/issues",
-                "source": "https://github.com/survos/tabler-bundle/tree/2.34.38"
+                "source": "https://github.com/survos/tabler-bundle/tree/2.35.14"
             },
             "funding": [
                 {
@@ -3535,7 +3535,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-10-04T18:03:15+00:00"
+            "time": "2026-10-06T20:24:30+00:00"
         },
         {
             "name": "symfony/asset",

@@ -23,7 +23,6 @@
  * }>
  */
 return [
-    '@survos/js-twig/generated/fos_routes.js' => ['path' => './var/js_twig_bundle/generated/fos_routes.js'],
     'app' => ['path' => './assets/app.js', 'entrypoint' => true],
     'meili' => ['path' => './assets/meili.js', 'entrypoint' => true],
     '@symfony/stimulus-bundle' => ['path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js'],
