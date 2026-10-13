@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.7
-FROM dunglas/frankenphp:1.13.0-php8.5 AS base
+FROM dunglas/frankenphp:1.13.1-php8.5 AS base
 WORKDIR /app
 RUN IPE_PROCESSOR_COUNT=2 install-php-extensions intl pdo_pgsql zip apcu
 RUN echo "memory_limit=512M" > /usr/local/etc/php/conf.d/app.ini
